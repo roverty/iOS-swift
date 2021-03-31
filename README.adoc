@@ -1,0 +1,105 @@
+= Curso iOS
+Creado por Rodrigo Francisco <rhodfra@gmail.com>
+Version 1.0, 12.03.2021
+//:keywords: 
+//:sectnums: 
+// Configuracion de la tabla de contenidos
+:toc: 
+:toc-placement!:
+:toclevels: 4                                          
+:toc-title: Contenido
+
+// Ruta base de las imagenes
+:imagesdir: ./README.assets/ 
+
+// Resaltar sintaxis
+:source-highlighter: pygments
+
+// Iconos para entorno local
+ifndef::env-github[:icons: font]
+
+// Iconos para entorno github
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+toc::[]
+
+Apuntes del diplomado de iOS 
+
+== Notas rápidas
+
+Para aprender a desarrollar aplicaciones para iOS se necesita tener instalado 
+https://developer.apple.com/xcode/[xcode]
+
+Y adicionalmente para correr programas de _Swift_ o usar _git_ en la terminal 
+se requiere tener instaladas las herramientas de desarrollo (Commande Line 
+Tools) de xcode
+
+[source,sh]
+xcode-select --install
+
+.Ligas útiles para _commandLineTools_ 
+* https://ma.ttias.be/mac-os-xcrun-error-invalid-active-developer-path-missing-xcrun/
+
+
+== Repositorios de referencia
+
+* https://github.com/crashbit/diplomado-5g[Germán Santos: Diplomado-5g]
+* https://github.com/galigaribaldi/Diplomado_IOS[Gali: Diplomado-IOS]
+* https://github.com/galigaribaldi/Codigos_swift[Gali: Codigos-Swift]
+* https://github.com/SamArtGS/iOS[Sam:iOS]
+
+== Roadmap 
+
+image::road.png[]
+
+== Particularidades del lenguaje
+
+A continuación se describen algunas características interesantes de  _Swift_,
+probablemente esta sección se reorganize posteriormente.
+
+=== Optional binding
+
+_Optional binding_ permite encontrar su una _variable opcional_ contiene algún
+valor, de ser así, este se pone disponiblem mediante una *constante* o variable
+*temporal*
+
+La técnica de optional binding se puede usar en `if`'s y en `while`'s
+
+[source,swift]
+----
+if let actualNumber = Int(possibleNumber) {
+  print("Se pudo hacer el parseo")
+  print("Ahora puedo usar el valor como actualNumber: \(actualNumber)")
+} else {
+  print("No se pudo realizar el parseo")
+}
+----
+
+Se pueden poner varios _Optional binding_, cada uno separado por *comas*. Cada
+coma se puede traducir a un "and"
+
+[source,swift]
+----
+# Este snipet se vuelve inecesariamenent díficil de leer
+if let firstNumber = Int("4") {
+  if let secondNumber = Int("42") {
+    if firstNumber < secondNumber && secondNumber < 100 {
+      print("\(firstNumber) < \(secondNumber) < 100")
+    }
+  }
+}
+
+# CORRECCIÓN
+if let firstNumber = Int("4"), 
+let secondNumber = Int("42"), 
+firstNumber < secondNumber && secondNumber < 100 {
+  print("\(firstNumber) < \(secondNumber) < 100")
+}
+
+----

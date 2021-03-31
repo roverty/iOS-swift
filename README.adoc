@@ -149,4 +149,99 @@ manejan, pero otros no.
 La característica más destacable es que _Swift_ utiliza *interpolación* de una
 manera muy sencilla.
 
+=== Arreglos
 
+[source,swift]
+----
+// Reemplazando 3 elementos del arreglo con solo 2: "Bananas" y "Apples"
+shoppingList[4...6] = ["Bananas", "Apples"]
+----
+
+=== Diccionarios
+
+[source,swift]
+-----
+// Inicializando un diccionario
+var namesOfIntegers = [Int: String]()
+// Una forma de vaciar el diccionario
+var namesOfIntegers2 = [:]
+// Agregando un valor al diccionario
+namesOfIntegers[16] = "sixteen"
+-----
+
+=== Switch
+
+La sentencia `switch` es una de las sentencias más versátiles de Swift. `case`
+puede recibir 
+
+* Rangos, 
+* Tuplas
+* E inclusive puedes hacer _value binding_
+
+[NOTE]
+Notar que la palabra `break` no es necesaria en comparación con otros lenguajes
+como C.
+
+*Ejemplo de switch con tuplas*
+
+[source,swift]
+----
+let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+  print("\(somePoint) is at the origin")
+case (_, 0):
+  print("\(somePoint) is on the x-axis")
+case (0, _):
+  print("\(somePoint) is on the y-axis")
+case (-2...2, -2...2):
+  print("\(somePoint) is inside the box")
+default:
+  print("\(somePoint) is outside of the box")
+}
+// Prints "(1, 1) is inside the box"
+----
+
+=== Guard (Salida anticipada)
+
+Una sentencia `guard` es _muy_ similiar a un `if`. Sin embargo, se enlistan
+algunas particularidades:
+
+* La sentencia `guard` *siempre* se acompaña de la clausula `else`
+* La sentencia `guard`, al igual que el `if`, requiere de una _condición
+booleana_ para trabajar.
+
+==== Casos de uso
+
+Para desenvolver opcionales.
+
+*Caso práctico*
+
+Tenemos una función y en caso de que algún opcional tenga el valor `nil` podemos
+terminar la función y regresar el control.
+
+
+[source,swift]
+----
+func greet(person: [String: String]) {
+  guard let name = person["name"] else {
+    return
+  }
+
+  print("Hello \(name)!")
+
+    guard let location = person["location"] else {
+      print("I hope the weather is nice near you.")
+        return
+    }
+
+  print("I hope the weather is nice in \(location).")
+}
+
+greet(person: ["name": "John"])
+// Prints "Hello John!"
+// Prints "I hope the weather is nice near you."
+greet(person: ["name": "Jane", "location": "Cupertino"])
+// Prints "Hello Jane!"
+// Prints "I hope the weather is nice in Cupertino."
+----

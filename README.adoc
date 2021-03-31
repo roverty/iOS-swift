@@ -103,3 +103,50 @@ firstNumber < secondNumber && secondNumber < 100 {
 }
 
 ----
+
+
+=== Nil-Coalescing Operator (`a ?? b`)
+
+No he encontrado la traducción más adecuada pero, este operador hace lo
+siguiente.
+
+_Desenvuelve_ un optional si es que contiene un valor, en caso contrario regresa
+el valor por defecto (`b`).
+
+El operador _nil-coalescing_ es un abreviación del código que se muestra a
+continuación
+
+[source,swift]
+a != nil ? a! : b
+
+*Ejemplo*
+
+[source,sh]
+----
+let defaultColor = "red"
+var userColor: String? //<1>
+
+//Uso del operador
+var layoutColor = userColor ?? defaultColor // <2>
+----
+<1> Se declara como opcional y como no se le asigna un valor, por defecto se
+inicializa con `nil`
+<2> La variable se inicializa con el color "red"
+
+
+=== Rangos
+
+Enumero las características que me parecieron relevantes y que algunos lenguajes
+manejan, pero otros no.
+
+* Rangos con _intervalo cerrado_
+* Rangos con _intervalo abierto_
+* Rangos de 1 solo lado (`names[2...]`)
+* Rangos "infinitos" (`range = [0...]`)
+
+=== Strings (Cadenas)
+
+La característica más destacable es que _Swift_ utiliza *interpolación* de una
+manera muy sencilla.
+
+

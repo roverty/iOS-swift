@@ -245,3 +245,120 @@ greet(person: ["name": "Jane", "location": "Cupertino"])
 // Prints "Hello Jane!"
 // Prints "I hope the weather is nice in Cupertino."
 ----
+
+=== Funciones
+
+En Swift, la sintaxis por defecto para crear funciones es la siguiente
+
+[source,swift]
+----
+func saludador(nombre:String, edad:Int) -> String {
+  return "Hola soy \(nombre) y tengo \(edad) años"
+}
+----
+
+Y para llamar a la función se hace siempre de la siguiente forma
+
+[source,swift]
+----
+saludo = saludador(nombre:"Rodrigo", edad:12)
+----
+
+==== Etiquetas de argumentos y nombres de parámetros
+
+* La etiqueta de argumento se utiliza cuando la función se manda a llamar.
+* El nombre del parámetro se utiliza en la implementación de la función.
+
+[source,swift]
+----
+func greet(person: String, from hometown: String) -> String {
+  return "Hello \(person)!  Glad you could visit from \(hometown)."
+}
+print(greet(person: "Bill", from: "Cupertino"))
+// Prints "Hello Bill!  Glad you could visit from Cupertino."
+----
+
+==== Omitiendo etiquetas de argumentos
+
+[source,swift]
+----
+func someFunction(_ firstParameterName: Int, secondParameterName: Int) {
+    // In the function body, firstParameterName and secondParameterName
+    // refer to the argument values for the first and second parameters.
+}
+someFunction(1, secondParameterName: 2)
+----
+
+==== Parámetros de entrada y salida (In-out parameters)
+
+Los parámetros pasados a las funciones son *constantes*, es decir, no podemos
+modificar su valor.
+
+Para poder modificar el parámetro que se le envía al usuario se utiliza la
+clausula `inout`.
+
+[source,swift]
+----
+func swapTwoInts(_ a: inout Int, _ b: inout Int) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+
+var someInt = 3
+var anotherInt = 107
+swapTwoInts(&someInt, &anotherInt) //<1>
+print("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+// Prints "someInt is now 107, and anotherInt is now 3"
+----
+<1> Observar que se requiere del _ampersand_ para indicar que el parámetro se
+puede modificar.
+
+En este caso, como parámetros no se pueden pasar _constantes_ o _literales_ ya
+que no se pueden modificar su valor y por lo tanto habría un error.
+
+==== Function Type
+
+Así como los enteros y los String son tipos de dato, existe también el tipo
+"function".
+
+Su utiliza es para poder asignar una función a una variable.
+
+[source,swift]
+----
+func addTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+var mathFunction: (Int, Int) -> Int = addTwoInts //<1>
+
+print("Result: \(mathFunction(2, 3))")
+// Prints "Result: 5"
+----
+<1> Ahora `mathFunction` tiene las mismas características que `addTwoInts`
+
+==== Function Types como tipos de parámetro
+
+Esta característica de swift nos permite pasar una función como parámetro de
+otra función como se muestra en el siguiente ejemplo:
+
+[source,swift]
+----
+func printMathResult(
+    _ mathOperator: (Int, Int) -> Int, 
+    _ a: Int, 
+    _ b: Int
+  ) {
+  print("Result: \(mathOperator(a, b))")
+}
+
+///Pasamos como parametro la función definida anteriormente
+print(MathResult(addTwoInts, 3, 5))
+// Prints "Result: 8"
+----
+
+==== Otras características de la funciones en swift
+
+* Se pueden regresar una función de una función. Simplemente despues de `->` se
+escribe la firma de función que queremos regresar.
+* Se pueden crear funciones anidadas.

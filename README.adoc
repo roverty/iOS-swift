@@ -362,3 +362,140 @@ print(MathResult(addTwoInts, 3, 5))
 * Se pueden regresar una función de una función. Simplemente despues de `->` se
 escribe la firma de función que queremos regresar.
 * Se pueden crear funciones anidadas.
+
+=== Closures
+
+Las closures *atrapan* y guardan referencias de cualquier constante y variable
+del contexto en donde fueron definidas.
+
+*Ejemplo de ordenamiento*
+
+[source,swift]
+----
+let nombres = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+
+// Primera forma de ordenamiento utilizando un closure
+reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
+  return s1 > s2
+})
+
+// Gracias a la inferencia de tipo se puede escribir de la sig. forma
+reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
+
+// Para una sola expresión se puede omitir la clausula return
+reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+----
+
+==== Nombre abreviados de argumentos
+
+Los nombres de los parámetros se pueden omitir poniendo: `$0,$1,$2, ...`
+
+[source,swift]
+----
+reversedNames = names.sorted(by:{$0 > $1})
+----
+
+==== Trailing closures
+
+[source,swift]
+----
+// Example of sorted 
+reversedNames = names.sorted() { $0 > $1 }
+
+// SI la  closure es el único parámetro de la función entonce se puede escrbir
+// de la siguiente forma
+
+reversedNames = names.sorted { $0 > $1 }
+
+let strings = numbers.map { (number) -> String in
+  // Cuerpo del closure
+}
+----
+
+Otros ejemplos
+
+[source,swift]
+----
+// Una closure se escribe en su forma normal y la siguiente como trailing
+// closure
+func loadPicture(from server: Server, 
+completion: (Picture) -> Void, onFailure: () -> Void) { 
+  if let picture = download("photo.jpg", from: server) { 
+    completion(picture)
+  } else {
+    onFailure()
+  }
+}
+
+// 2 closure en su forma "trailing"
+// La firma de la funcion 
+// loadPicture(from:completion:onFailure:)
+loadPicture(from: someServer) { picture in
+  someView.currentPicture = picture
+} onFailure: {
+  print("Couldn't download the next picture.")
+}
+----
+
+==== Escapando Closures
+Considerar la siguiente _closure_
+
+[source,swift]
+----
+var completionHandlers = [() -> Void]()
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+  completionHandlers.append(completionHandler)
+}
+----
+
+*Explicación*
+
+* `@escaping` es para indicar que la función se escapa
+* Una closure se espaca cuando una pasa como argumente de una función pero se
+* invoca hasta que la función regresa.
+* `someFunctionWithEscapingClosure(_:)` toma una closure como argumento y la
+* agregar a un arrego que es declarado fuera de la función.
+* La función regresa después de iniciar la operación, pero no se llama a la
+_closure_ hasta que se completa la operación.
+
+
+==== Auto closure
+
+*Primer ejemplo: Lazy evaluation*
+
+
+[source,swift]
+----
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// Prints "5"
+
+let customerProvider = { customersInLine.remove(at: 0) }
+print(customersInLine.count)
+// Prints "5"
+
+print("Now serving \(customerProvider())!")
+// Prints "Now serving Chris!"
+print(customersInLine.count)
+// Prints "4"
+----
+
+Otro ejemplo con el atributo `@autoclosure`
+
+
+[source,swift]
+----
+// customersInLine is ["Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: @autoclosure () -> String) {
+  print("Now serving \(customerProvider())!")
+}
+serve(customer: customersInLine.remove(at: 0))
+// Prints "Now serving Ewa!"
+----
+
+.Explicación
+* Con `@autoclosure` el argmento de la función se convierte en automático a una
+closure.
+* El objetivo es el mismo, retrasar la evaluación de cierta parte de código.
+
+Los atributos `@autoclosure` y `@escaping` se pueden combinar.

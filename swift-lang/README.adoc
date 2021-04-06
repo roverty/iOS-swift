@@ -494,3 +494,84 @@ directionToHead = .east //<1>
 ----
 <1> Se entiende que directionToHead es de tipo CompassPoint por lo que se puede
 usar la sintaxis `.east` para cambiar su valor
+
+==== Enumeraciones con valores asociados
+
+Se explica mediante el siguiente ejemplo:
+
+[source,swift]
+----
+enum Barcode {
+    case upc(Int, Int, Int, Int)
+    case qrCode(String)
+}
+
+var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+----
+
+==== Raw values
+
+Similar al ejemplo de _Valores asociados_, `swift` tiene la capacidad de asociar
+valores a los casos al momento de crear la enumeración
+
+[source,swift]
+----
+enum ASCIIControlCharacter: Character { //<1>
+  case tab = "\t"
+  case lineFeed = "\n"
+  case carriageReturn = "\r"
+}
+----
+<1> `: Character` define el tipo de dato de cada uno de los casos de la
+enumeración
+
+
+==== Enumeraciones recursivas
+
+Son útiles para cuando en la enumeración necesitamos utilizar el propio nombre
+de la enumeración en alguno de los casos. Ejemplo:
+
+
+[source,swift]
+----
+// Se puede definir de esta forma (con la palabra indirect en cada caso)
+enum ArithmeticExpression {
+  case number(Int)
+  indirect case addition(ArithmeticExpression, ArithmeticExpression)
+  indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+
+// Ó con indirect al inicio de la enumeración
+indirect enum ArithmeticExpression {
+  case number(Int)
+  case addition(ArithmeticExpression, ArithmeticExpression)
+  case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+----
+
+*Ejemplo* de uso de la enumeración descrita en la parte de arriba
+
+
+[source,swift]
+----
+// Ejemplo de uso
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum,
+  ArithmeticExpression.number(2)) 
+
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+print(evaluate(product))
+// Prints "18"
+----

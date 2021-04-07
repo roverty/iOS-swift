@@ -1,0 +1,101 @@
+= iOS - Swift
+Creado por Rodrigo Francisco <rhodfra@gmail.com>
+Version 1.0, 12.03.2021
+//:keywords: 
+//:sectnums: 
+// Configuracion de la tabla de contenidos
+:toc: 
+:toc-placement!:
+:toclevels: 4                                          
+:toc-title: Contenido
+
+// Ruta base de las imagenes
+:imagesdir: ./README.assets/ 
+
+// Resaltar sintaxis
+:source-highlighter: pygments
+
+// Iconos para entorno local
+ifndef::env-github[:icons: font]
+
+// Iconos para entorno github
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+toc::[]
+
+Apuntes de mi aprendizaje con `swift`
+
+== Particularidades del lenguaje
+
+A continuación se describen algunas características interesantes de  _Swift_,
+probablemente esta sección se reorganize posteriormente.
+
+=== Estructuras y clases
+
+En `swift` las estructuras y las clases son muy cercanas en muchos aspectos con
+comparación con otros lenguajes de programación.
+
+Las diferencias entre las clases y loas estructuras es que *las clases tienen*:
+
+* La herencia permite que una clase herede las características de otra.
+* La conversión de tipos le permite verificar e interpretar el tipo de una
+instancia de clase en tiempo de ejecución.
+* Los desinicializadores (_deinitializers_) permiten que una instancia de una
+clase libere cualquier recurso que haya asignado.
+//* El recuento de referencias permite más de una referencia a una instancia de
+//clase.
+
+Otras diferencias _importantes_:
+
+* Las *estructuras* y las _enumeraciones_ son _value type_ (valores por tipo).
+Si las pasamos como parámetro de una función o las asignamos a otras variables
+se creará una copia.
+* Las *clases* son _reference type_ (tipos por referencia).
+
+
+*Sintaxis básica*
+
+
+[source,swift]
+----
+struct SomeStructure {
+    // structure definition goes here
+}
+class SomeClass {
+    // class definition goes here
+}
+----
+
+==== Inicializadores de miembro (Memberwise initializers)
+
+Las *estructuras* simepre tiene asignado de manera automática un inicializador
+por defecto.
+
+
+[source,swift]
+----
+let vga = Resolution(width: 640, height: 480)
+----
+
+[NOTE]
+====
+Las colecciones definidas en la librería estándar como arreglos, diccionarios y
+cadenas usan una optimización para reducir costo computacional de copiar toda la
+colección.
+La copia no se hace inmediatamente. Se hace al momento de que se quiere
+modificar alguno de los elementos de la copia.
+====
+
+==== Identity operator
+
+Para identificar si una variable o una constante hace referencia a una misma
+instancia de una _clase_ se utilizan los siguientes operadores:
+
+* `===` (operador identical)
+* `!==` (operador not idential)

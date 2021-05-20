@@ -1,0 +1,142 @@
+= iOS - Swift
+Creado por Rodrigo Francisco <rhodfra@gmail.com>
+Version 1.0, 12.03.2021
+//:keywords: 
+//:sectnums: 
+// Configuracion de la tabla de contenidos
+:toc: 
+:toc-placement!:
+:toclevels: 4                                          
+:toc-title: Contenido
+
+// Ruta base de las imagenes
+:imagesdir: ./README.assets/ 
+
+// Resaltar sintaxis
+:source-highlighter: pygments
+
+// Iconos para entorno local
+ifndef::env-github[:icons: font]
+
+// Iconos para entorno github
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+Apuntes de mi aprendizaje en `iOS` en el curso de la
+*https://www.udemy.com/user/4b4368a3-b5c8-4529-aa65-2056ec31f37e/[Dr. Angela
+Yu]*
+
+toc::[]
+
+== Propiedades mutables de las `estructuras`
+
+* En principio no podemos cambiar el valor de las propiedades de una estructura
+en alguna _función_, sin embargo, hay veces en que necesitamos hacerlo.
+* Recordar que las _estructuras_ son datos _inmutables_ por ello se debe hacer
+lo siguiente.
+
+
+[source,swift]
+----
+struct CalculatorBrain {
+  var bmi: String?
+  mutating func calculateBMI(height: Float, weight: Float) { //<1>
+    let bmiValue = weight / (height * height)
+
+      if bmiValue < 18.5 {
+        bmi = "Eat more pies!"
+      } else if bmiValue < 24.9 {
+        bmi = "Fit as a fiddle!"
+      } else {
+        bmi = "Eat less pies!"
+      }
+  }
+}
+----
+<1> `mutating` indica que la función puede modificar las propiedades de la
+estructura
+
+== Multi-screen app view transition
+
+Para cambiarnos entre las vistas de nuestras aplicaciones se puede hacer de dos
+maneras.
+
+Opcion 1) :: Utilizando `present`
+Opcion 2) :: Utilizando `segues`
+
+[NOTE]
+====
+No estoy seguro si la palabra `segue` tenga alguna traducción al español, por lo
+que anexo la definición según _Google translate_:
+
+Verb ::
+(in music and film) move without interruption from one piece of music or scene
+to another.
+
+Noun ::
+an uninterrupted transition from one piece of music or film scene to another.
+====
+
+=== Utilizando una `present`
+
+
+[source,swift]
+----
+class CalculateViewController: UIViewController {
+  @IBAction func goToSecondView(_ sender: UIButton) {
+    let secondVC = SecondViewController()
+    // Passing data to second view controller
+    secondVC.bmiValue = String(format: "%.1f",bmi)
+
+    self.present(secondVC,animated: true, completion: nil)
+  }
+}
+----
+
+=== Utilizando `segues`
+
+image:segue.png[]
+
+. Sostenemos la tecla _ctrl_ y arrastamos `Calculate View Controller` hasta
+`Result View  Controller`.
+. Aparecerá un menú, seleccionamos `Present Modally`
+.. Con esto aparecerá una flecha en nuetra interfaz, que indica que nos
+moveremos de la vista 1 a la 2. (`segue`).
+. No hay olvidar agregar un identificador
+
+[source,swift]
+----
+import UIKit
+
+class CalculateViewController: UIViewController {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  @IBAction func goToSecondView(_ sender: UIButton) {
+    performSegue(withIdentifier: "goToResult", sender: self) //<1>
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //<2>
+    if segue.identifier == "goToResult" { //<3>
+      let destinationVC = segue.destination as! ResultViewController
+
+      // passing data to second view
+      destinationVC.bmiValue = calculatorBrain.getBMIValue()
+      destinationVC.advice = calculatorBrain.getAdvice()
+      destinationVC.color = calculatorBrain.getColor()
+    }
+  }
+}
+----
+<1> `performSegue` nos permite transitar hacia la siguiente vista. Dicha vista
+se debe configurar previamente en el _storyboad_
+<2> Esta función se utiliza para para datos a la vista siguiente cuando se manda
+a llamar `performSegue`.
+<3> El _segue_ tiene un identificador y como una misma vista puede ir a varias
+se debe comprobar el identificador.

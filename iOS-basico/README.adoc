@@ -140,3 +140,96 @@ se debe configurar previamente en el _storyboad_
 a llamar `performSegue`.
 <3> El _segue_ tiene un identificador y como una misma vista puede ir a varias
 se debe comprobar el identificador.
+
+//== SF Symbols
+
+//== Crear colores personalizados para que se adapten al _dark mode_
+
+== Delegate para _Textfield_
+
+EL patrón de diseño llamado _Delegate Design Pattern_ utiliza _protocolos_
+
+=== Dar funcionalidad al botón _go_
+
+[source,swift]
+----
+class WeatherViewController: UIViewController, UITextFieldDelegate{ //<1>
+  override func viewDidLoad(){
+    super.viewDidLoad()
+
+    searchTexField.delegate = self //<3>
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool { //<2>
+    searchTexField.endEditing(true)
+    print(searchTexField.text!)
+    return true
+  }
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    searchTexField.text = ""
+  }
+  func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    if textField.text != "" {
+      return true
+    } else {
+      textField.placeholder = "You must type something"
+      return false
+    }
+  }
+}
+----
+<1> Se utiliza el protocolo `Delegate`
+<2> Esta función permite que al dar click el botón de _go_ (en el teclado)
+suceda la acción que deseamos.
+<3> Es la línea más importante para utilizar el protocolo delegate del
+_Textfield_
+
+== Protocols
+
+Es como un certificado. Define ciertos requerimientos.
+
+
+[source,swift]
+----
+protocol CanFly {
+  func fly() // Must not have a body
+}
+
+class Bird {
+  var isFemale = true
+
+  func layEgg(){
+    if isFemale {
+      print("Having an egg")
+    }
+  }
+}
+
+class Eagle: Bird,CanFly {
+  func soar(){
+    print ("The eagle glides in the air using air currents")
+  }
+  func fly() {
+    print("I am an eagle and I can fly")
+  }
+}
+
+class Penguin: Bird {
+  func swim() {
+    print("swiminggg")
+  }
+}
+
+struct Airplane: CanFly {
+  func fly() {
+    print("I am an airplane flying")
+  }
+}
+
+struct FlyingMuseum {
+  func flyingDemo(flyingObject: CanFly) {
+    flyingObject.fly()
+  }
+}
+----
+

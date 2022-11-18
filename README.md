@@ -1,5 +1,8 @@
 # iOS Topics
 
+Here are some links that made me understand key topics to develop apps in iOS,
+also, some of this links solve problems or questions I had while coding.
+
 ## Code style guidelines
 
 - [x] [Kodecode guidelines](https://github.com/kodecocodes/swift-style-guide)

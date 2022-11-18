@@ -42,3 +42,12 @@ also, some of this links solve problems or questions I had while coding.
 
 - [ ] [Optimization tips (Apple)](https://github.com/apple/swift/blob/main/docs/OptimizationTips.rst)
 - [ ] [Application Sandboxing (CocoaCasts)](https://cocoacasts.com/what-is-application-sandboxing/)
+
+## SwiftUI
+
+- [x] [SwiftUI course by Stanford](https://cs193p.sites.stanford.edu/)
+
+## Unsolved questions
+
+- What does `nonisolated` mean?
+- What does `dynamic` does in swift?

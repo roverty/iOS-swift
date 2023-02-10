@@ -14,6 +14,7 @@ also, some of this links solve problems or questions I had while coding.
 - [x] [Swift Documentation (NShipter - Nate Cook)](https://nshipster.com/swift-documentation/)
 - [ ] [Create iOS reminders programatically (Flip Nemeck)](https://nemecek.be/blog/35/how-to-create-ios-reminders-in-code-with-alarms-or-recurrences)
 - [ ] [UISearchController and UISearchBar (Kodeco)](https://www.kodeco.com/9218753-what-s-new-with-uisearchcontroller-and-uisearchbar#toc-anchor-001)
+- [x] [If let case (short syntax to unwrap result values)](https://useyourloaf.com/blog/swift-if-case-let/)
 
 ## Programming concepts
 
@@ -22,6 +23,9 @@ also, some of this links solve problems or questions I had while coding.
 - [x] [SOLID Principles Applied to Swift (Marco Santa Dev)](https://www.marcosantadev.com/solid-principles-applied-swift/)
 - [x] [Dependency injection in Swift (CocoaCast)](https://cocoacasts.com/dependency-injection-in-swift)
 - [ ] [Dependency injection in Swift with Protocols (Swift with Majid)](https://swiftwithmajid.com/2019/03/06/dependency-injection-in-swift-with-protocols/)
+- [x] [Some keyworkd in swift](https://www.donnywals.com/what-is-the-some-keyword-in-swift/)
+- [x] [How to use any and some](https://onmyway133.com/posts/how-to-use-any-vs-some-in-swift/#:~:text=With%20%E2%80%9Csome%2C%E2%80%9D%20the%20underlying,to%20store%20arbitrary%20concrete%20types.)
+- [x] [Difference between any and some](https://www.donnywals.com/whats-the-difference-between-any-and-some-in-swift-5-7/)
 
 ## RxSwift
 
@@ -47,6 +51,10 @@ also, some of this links solve problems or questions I had while coding.
 
 - [x] [SwiftUI course by Stanford](https://cs193p.sites.stanford.edu/)
 
+## Other
+
+- [x] [Xcode Snippets](https://sarunw.com/posts/how-to-create-code-snippets-in-xcode/#code-snippets-library)
+- [x] [Xcode project and file templates](https://www.kodeco.com/26582967-xcode-project-and-file-templates#toc-anchor-019)
 ## Unsolved questions
 
 - What does `nonisolated` mean?
